@@ -158,9 +158,14 @@ import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from "aws-lambda";
 export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   event
 ) => {
+
+  const jwtEmail = event?.requestContext?.authorizer?.jwt?.claims?.email;
+  const jwtName = event?.requestContext?.authorizer?.jwt?.claims?.name;
+  const jwtSubject = event?.requestContext?.authorizer?.jwt?.claims?.sub;
+
   return {
     statusCode: 200,
-    body: `Hello ${event.requestContext.authorizer.jwt.claims.sub}!`,
+    body: `Hello ${jwtName}! Your email is ${jwtEmail}. You are JWT subject ${jwtSubject}`,
   };
 };
 ```
